@@ -4,7 +4,15 @@ author: bo
 date: '2017-08-05'
 ---
 
-多年之後，又嘗試建立博客。
+多年之後，又嘗試建立博客。這次用到了`blogdown`這個R包。
 
-這次用到了blogdown這個R包。具體步驟如下：
+第一次建立的具體步驟如下：
+
+1. 安装`blogdown`包：
+
+   ```R
+   install.packages("blogdown")
+   ```
+
+2. ​
 
