@@ -1,6 +1,6 @@
 baseurl: "/"
 languageCode: "en-us"
-title: "The title of your website"
+title: "manjis's website"
 theme: "hugo-lithium-theme"
 googleAnalytics: ""
 disqusShortname: ""
@@ -76,11 +76,11 @@ menu:
 
 params:
   description: "Description of your website."
-  disqusURL: "http://yihui.name"
-  fullURL: "https://yihui.name"
+  disqusURL: ""
+  fullURL: ""
   customCSS: ["css/custom.css"]
   customJS: ["js/center-img.js", "js/right-quote.js", "js/no-highlight.js", "js/fix-footnote.js"]
-  githubContentURL: "https://github.com/rbind/yihui.name/edit/master/content/"
+  githubContentURL: ""
 
   # options for highlight.js (version, additional languages, and theme)
   highlightjsVersion: "9.9.0"
@@ -88,10 +88,10 @@ params:
   highlightjsTheme: "github"
 
   social:
-    twitter: "xieyihui"
-    weibo: "谢益辉"
-    weibo_url: "yihuixie"
-    github: "yihui"
+    twitter: ""
+    weibo: ""
+    weibo_url: ""
+    github: ""
 
   logo:
     url: "logo.png"
