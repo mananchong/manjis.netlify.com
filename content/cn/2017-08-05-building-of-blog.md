@@ -1,14 +1,14 @@
 ---
 title: 博客的建立过程
-author: bo
+author: 波
 date: '2017-08-05'
 ---
 
-多年之后，又尝试建立博客。这次用到了[`blogdown`](https://github.com/rstudio/blogdown)这个R包。
+多年之后，又尝试建立博客。这次用到了 [`blogdown`](https://github.com/rstudio/blogdown) 这个 R 包。
 
 第一次建立的具体步骤如下：
 
-1. 安装`blogdown`包：  
+1. 安装 `blogdown` 包：  
 
     ```
     devtools::install_github('rstudio/blogdown')
