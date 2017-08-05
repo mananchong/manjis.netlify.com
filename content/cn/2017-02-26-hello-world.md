@@ -1,6 +1,6 @@
 ---
 title: 第一篇日志
-author: 谢益辉
+author: bo
 date: '2017-02-26'
 ---
 
