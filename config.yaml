@@ -27,6 +27,8 @@ menu:
     - name: "博客"
       url: "/cn/"
       weight: 4
+    - name: "delicious"
+      url: "/delicious/"
   en:
     - name: "Home"
       url: "/"
@@ -97,11 +99,11 @@ params:
     url: "logo.png"
     width: 50
     height: 50
-    alt: "Yihui Xie"
+    alt: "manjis"
 
   author:
-    en: "Yihui Xie"
-    cn: "谢益辉"
+    en: "bo"
+    cn: "波"
 
   lang:
     edit:
