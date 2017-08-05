@@ -9,10 +9,12 @@ date: '2017-08-05'
 第一次建立的具體步驟如下：
 
 1. 安装`blogdown`包：  
+
     ```
     install.packages("blogdown")
     ```
-2. 建立站点：  
+2. 建立站点：
+
     ```
     library(blogdown)
     mkdir("~/my_site")
