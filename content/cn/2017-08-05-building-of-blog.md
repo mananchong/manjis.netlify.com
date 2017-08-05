@@ -1,12 +1,12 @@
 ---
-title: 博客的建立過程
+title: 博客的建立过程
 author: bo
 date: '2017-08-05'
 ---
 
-多年之後，又嘗試建立博客。這次用到了[`blogdown`](https://github.com/rstudio/blogdown)這個R包。
+多年之后，又尝试建立博客。这次用到了[`blogdown`](https://github.com/rstudio/blogdown)这个R包。
 
-第一次建立的具體步驟如下：
+第一次建立的具体步骤如下：
 
 1. 安装`blogdown`包：  
 
@@ -20,4 +20,4 @@ date: '2017-08-05'
     mkdir("~/my_site")
     new_site()
     ```
-    用上面的命令建立的站點，是默認的樣子。
+    用上面的命令建立的站点，是默认的样子。
