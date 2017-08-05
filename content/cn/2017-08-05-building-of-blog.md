@@ -10,12 +10,12 @@ date: '2017-08-05'
 
 1. 安装 `blogdown` 包：  
 
-    ```
+    ```r
     devtools::install_github('rstudio/blogdown')
     ```
 2. 建立站点：
 
-    ```
+    ```r
     library(blogdown)
     mkdir("~/my_site")
     new_site()
