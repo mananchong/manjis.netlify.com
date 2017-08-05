@@ -14,5 +14,11 @@ date: '2017-08-05'
    install.packages("blogdown")
    ```
 
-2. ​
+2. 建立站点：
+
+   ```R
+   library(blogdown)
+   mkdir("~/my_site")
+   new_site()
+   ```
 
