@@ -1,3 +1,7 @@
+---
+title: "delicious"
+---
+
 ## R
 1. [R project](https://www.r-project.org)
 2. [rweekly](https://rweekly.org)
