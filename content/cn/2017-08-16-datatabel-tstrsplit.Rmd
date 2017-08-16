@@ -2,6 +2,7 @@
 title: Rdatatable中tstrsplit的用法
 author: bo
 date: '2017-08-16'
+output: html_document
 ---
 
 [data.table](http://rdatatable.com) 包中的 `tstrsplit` 函数可以用来把 data.frame 中的一列拆分成两列或多列。
