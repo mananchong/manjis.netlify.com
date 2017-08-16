@@ -4,7 +4,7 @@ author: bo
 date: '2017-08-16'
 ---
 
-data.table 包中的 `tstrsplit` 函数可以用来把 data.frame 中的一列拆分成两列或多列。
+[data.table](http://rdatatable.com) 包中的 `tstrsplit` 函数可以用来把 data.frame 中的一列拆分成两列或多列。
 
 平时会看到把年龄保存为数字加单位的形式，比如 "12Y", "23D", "6M". 这样的形式不利于过滤。此时就可以利用刚才提到的 'tstrsplit' 来把年龄列拆分成数值列和单位列，再进行下一步处理。
 
