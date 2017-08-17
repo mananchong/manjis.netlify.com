@@ -1,10 +1,24 @@
 ---
 title: R包curl的离线安装
-author: bo
-date: '2017-08-16'
+author: 波
+date: '2017-08-17'
 slug: R包curl的离线安装
 categories: []
 tags: []
 ---
 
-TODO
+在无法上外网的电脑（windows系统）上无法成功安装 'curl' 包。
+
+在 github 上搜索之后，发现安装过程中会去 github 上的 `rwinlib/libcurl` 下载一个为windows平台编译的curl。
+```{r eval = FALSE}
+# Build against static libraries from rwinlib
+if(!file.exists("../windows/libcurl-7.54.1/include/curl/curl.h")){
+  if(getRversion() < "3.3.0") setInternet2()
+  download.file("https://github.com/rwinlib/libcurl/archive/v7.54.1.zip", "lib.zip", quiet = TRUE)
+  dir.create("../windows", showWarnings = FALSE)
+  unzip("lib.zip", exdir = "../windows")
+  unlink("lib.zip")
+}
+```
+
+ 
