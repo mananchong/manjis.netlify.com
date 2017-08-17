@@ -41,3 +41,19 @@ knitr::kable(DT)
 |张三 |15Y |15 Y    |
 |李四 |10M |10 M    |
 |王五 |23D |23 D    |
+
+最后按照空格拆分即可：
+
+```r
+DT[, `:=`(c("age_value", "age_unit"), tstrsplit(age_new, " "))]
+knitr::kable(DT)
+```
+
+
+
+|name |age |age_new |age_value |age_unit |
+|:----|:---|:-------|:---------|:--------|
+|张三 |15Y |15 Y    |15        |Y        |
+|李四 |10M |10 M    |10        |M        |
+|王五 |23D |23 D    |23        |D        |
+

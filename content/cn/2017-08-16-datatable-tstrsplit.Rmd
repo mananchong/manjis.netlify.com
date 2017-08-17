@@ -22,3 +22,10 @@ knitr::kable(DT)
 DT[, age_new := gsub('(\\d+)', '\\1 ', age)]
 knitr::kable(DT)
 ```
+
+最后按照空格拆分即可：
+```{r}
+DT[, c('age_value', 'age_unit') := tstrsplit(age_new, ' ')]
+knitr::kable(DT)
+```
+
