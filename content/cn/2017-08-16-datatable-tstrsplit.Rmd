@@ -17,15 +17,15 @@ DT <- data.table(name = c('张三', '李四', '王五'),
 knitr::kable(DT)
 ```
 
-然后用 `gsub` 把数值和单位之间加上空格：
+然后用 `gsub` 把数值和单位之间加上 `@` 符号：
 ```{r}
-DT[, age_new := gsub('(\\d+)', '\\1 ', age)]
+DT[, age_new := gsub('(\\d+)', '\\1@', age)]
 knitr::kable(DT)
 ```
 
-最后按照空格拆分即可：
+最后按照 `@` 拆分即可：
 ```{r}
-DT[, c('age_value', 'age_unit') := tstrsplit(age_new, ' ')]
+DT[, c('age_value', 'age_unit') := tstrsplit(age_new, '@')]
 knitr::kable(DT)
 ```
 
