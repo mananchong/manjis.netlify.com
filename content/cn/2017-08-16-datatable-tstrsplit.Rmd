@@ -7,6 +7,7 @@ output: html_document
 
 [data.table](http://rdatatable.com) 包中的 `tstrsplit` 函数可以用来把 data.frame 中的一列拆分成两列或多列。
 
+## 事先知道要拆成几列的情况
 平时会看到把年龄保存为数字加单位的形式，比如 "12Y", "23D", "6M". 这样的形式不利于过滤。此时就可以利用刚才提到的 'tstrsplit' 来把年龄列拆分成数值列和单位列，再进行下一步处理。
 
 首先建立一个示例用的 `data.table` : 
@@ -29,3 +30,4 @@ DT[, c('age_value', 'age_unit') := tstrsplit(age_new, '@')]
 knitr::kable(DT)
 ```
 
+## 事先不知道要拆成几列的情况
