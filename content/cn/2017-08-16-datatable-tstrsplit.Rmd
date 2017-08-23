@@ -13,21 +13,82 @@ output: html_document
 首先建立一个示例用的 `data.table` : 
 ```{r}
 library(data.table)
-DT <- data.table(name = c('张三', '李四', '王五'),
+dtAge <- data.table(name = c('张三', '李四', '王五'),
                  age = c('15Y', '10M', '23D'))
-knitr::kable(DT)
+knitr::kable(dtAge)
 ```
 
 然后用 `gsub` 把数值和单位之间加上 `@` 符号：
 ```{r}
-DT[, age_new := gsub('(\\d+)', '\\1@', age)]
-knitr::kable(DT)
+dtAge[, ageNew := gsub('(\\d+)', '\\1@', age)]
+knitr::kable(dtAge)
 ```
 
 最后按照 `@` 拆分即可：
 ```{r}
-DT[, c('age_value', 'age_unit') := tstrsplit(age_new, '@')]
-knitr::kable(DT)
+dtAge[, c('ageValue', 'ageUnit') := tstrsplit(ageNew, '@')]
+knitr::kable(dtAge)
 ```
 
 ## 事先不知道要拆成几列的情况
+
+前几天刚好遇到这样的情况，是关于病人按部位做CT的人次的表格。第一列是做的部位，胸部，腹部，脊柱等，这里存在一人同时做几个部位的情况，每个部位都要计算。第二列是扫描方式，是平扫还是增强。第三列是人次。
+
+1. 示例数据^[不一定符合临床实际情况；]如下：
+```{r}
+library(data.table)
+dtCT <- data.table(buWei = c('胸部', '腹部,腰椎,颈部', '关节,胸部', '颅脑'),
+                 fangShi = c('平扫', '平扫', '增强', '增强'),
+                 renCi = c(11, 22, 33, 44))
+knitr::kable(dtCT)
+```
+
+2. 计算出最多需要拆成几列：
+```{r}
+maxCol <- max(sapply(strsplit(dtCT$buWei,','),length))
+maxCol
+```
+
+3. 拆成 `r maxCol` 列：
+```{r}
+dtCT[, paste0('buWei', 1:maxCol) := tstrsplit(buWei, ',')][, buWei := NULL]
+knitr::kable(dtCT)
+```
+
+4. 用 `melt` 函数将部位转成一列：
+```{r}
+ans01 <- melt(dtCT, id.vars = c('fangShi', 'renCi'))[!is.na(value)]
+ans01[, variable := NULL]
+setnames(ans01, 'value', 'newBuWei')
+knitr::kable(ans01)
+```
+
+5. 按拆分后的部位和扫描方式汇总：
+```{r}
+ans02 <- ans01[, .(heJi = sum(renCi)), keyby = .(newBuWei, fangShi)]
+knitr::kable(ans02)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
