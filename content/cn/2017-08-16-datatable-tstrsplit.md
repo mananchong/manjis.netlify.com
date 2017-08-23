@@ -115,20 +115,21 @@ knitr::kable(dtCT)
 ans01 <- melt(dtCT, id.vars = c("fangShi", "renCi"))[!is.na(value)]
 ans01[, `:=`(variable, NULL)]
 setnames(ans01, "value", "newBuWei")
+setcolorder(ans01, c("newBuWei", "fangShi", "renCi"))
 knitr::kable(ans01)
 ```
 
 
 
-|fangShi | renCi|newBuWei |
-|:-------|-----:|:--------|
-|平扫    |    11|胸部     |
-|平扫    |    22|腹部     |
-|增强    |    33|关节     |
-|增强    |    44|颅脑     |
-|平扫    |    22|腰椎     |
-|增强    |    33|胸部     |
-|平扫    |    22|颈部     |
+|newBuWei |fangShi | renCi|
+|:--------|:-------|-----:|
+|胸部     |平扫    |    11|
+|腹部     |平扫    |    22|
+|关节     |增强    |    33|
+|颅脑     |增强    |    44|
+|腰椎     |平扫    |    22|
+|胸部     |增强    |    33|
+|颈部     |平扫    |    22|
 
 5. 按拆分后的部位和扫描方式汇总：
 

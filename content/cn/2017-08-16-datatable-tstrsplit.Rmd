@@ -60,6 +60,7 @@ knitr::kable(dtCT)
 ans01 <- melt(dtCT, id.vars = c('fangShi', 'renCi'))[!is.na(value)]
 ans01[, variable := NULL]
 setnames(ans01, 'value', 'newBuWei')
+setcolorder(ans01, c('newBuWei', 'fangShi', 'renCi'))
 knitr::kable(ans01)
 ```
 
