@@ -95,19 +95,19 @@ knitr::kable(dtAge)
 3. 拆成 3 列：
     
     ```r
-    dtCT[, `:=`(paste0("buWei", 1:maxCol), tstrsplit(buWei, ","))][, 
+    dtCT[, `:=`(paste0("buWei_", 1:maxCol), tstrsplit(buWei, ","))][, 
         `:=`(buWei, NULL)]
     knitr::kable(dtCT)
     ```
     
     
     
-    |fangShi | renCi|buWei1 |buWei2 |buWei3 |
-    |:-------|-----:|:------|:------|:------|
-    |平扫    |    11|胸部   |颈部   |NA     |
-    |平扫    |    22|腹部   |腰椎   |颈部   |
-    |增强    |    33|关节   |胸部   |NA     |
-    |增强    |    44|颅脑   |NA     |NA     |
+    |fangShi | renCi|buWei_1 |buWei_2 |buWei_3 |
+    |:-------|-----:|:-------|:-------|:-------|
+    |平扫    |    11|胸部    |颈部    |NA      |
+    |平扫    |    22|腹部    |腰椎    |颈部    |
+    |增强    |    33|关节    |胸部    |NA      |
+    |增强    |    44|颅脑    |NA      |NA      |
 
 4. 用 `melt` 函数将部位转成一列：
     
@@ -150,3 +150,23 @@ knitr::kable(dtAge)
     |腹部     |平扫    |   22|
     |颅脑     |增强    |   44|
     |颈部     |平扫    |   33|
+
+上面 2, 3 两步，可以用 `splitstackshape` 包中的 `cSplit` 来实现，只需一步：
+
+```r
+library(splitstackshape)
+dtCT <- data.table(buWei = c("胸部,颈部", "腹部,腰椎,颈部", 
+    "关节,胸部", "颅脑"), fangShi = c("平扫", "平扫", 
+    "增强", "增强"), renCi = c(11, 22, 33, 44))
+knitr::kable(cSplit(dtCT, "buWei", ","))
+```
+
+
+
+|fangShi | renCi|buWei_1 |buWei_2 |buWei_3 |
+|:-------|-----:|:-------|:-------|:-------|
+|平扫    |    11|胸部    |颈部    |NA      |
+|平扫    |    22|腹部    |腰椎    |颈部    |
+|增强    |    33|关节    |胸部    |NA      |
+|增强    |    44|颅脑    |NA      |NA      |
+
