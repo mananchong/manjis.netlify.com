@@ -66,9 +66,9 @@ knitr::kable(dtAge)
     
     ```r
     library(data.table)
-    dtCT <- data.table(buWei = c("胸部,颈部", "腹部,腰椎,颈部", 
-        "关节,胸部", "颅脑"), fangShi = c("平扫", "平扫", 
-        "增强", "增强"), renCi = c(11, 22, 33, 44))
+    dtCT <- data.table(buWei = c("胸部,颈部", "腹部,腰椎,颈部", "关节,胸部", 
+        "颅脑"), fangShi = c("平扫", "平扫", "增强", "增强"), renCi = c(11, 
+        22, 33, 44))
     knitr::kable(dtCT)
     ```
     
@@ -143,21 +143,21 @@ knitr::kable(dtAge)
     
     |newBuWei |fangShi | heJi|
     |:--------|:-------|----:|
+    |腹部     |平扫    |   22|
     |关节     |增强    |   33|
+    |颈部     |平扫    |   33|
+    |颅脑     |增强    |   44|
     |胸部     |增强    |   33|
     |胸部     |平扫    |   11|
     |腰椎     |平扫    |   22|
-    |腹部     |平扫    |   22|
-    |颅脑     |增强    |   44|
-    |颈部     |平扫    |   33|
 
 上面 2, 3 两步，可以用 `splitstackshape` 包中的 `cSplit` 来实现，只需一步：
 
 ```r
 library(splitstackshape)
-dtCT <- data.table(buWei = c("胸部,颈部", "腹部,腰椎,颈部", 
-    "关节,胸部", "颅脑"), fangShi = c("平扫", "平扫", 
-    "增强", "增强"), renCi = c(11, 22, 33, 44))
+dtCT <- data.table(buWei = c("胸部,颈部", "腹部,腰椎,颈部", "关节,胸部", 
+    "颅脑"), fangShi = c("平扫", "平扫", "增强", "增强"), renCi = c(11, 
+    22, 33, 44))
 knitr::kable(cSplit(dtCT, "buWei", ","))
 ```
 
