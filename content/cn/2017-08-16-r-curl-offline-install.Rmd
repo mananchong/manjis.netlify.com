@@ -1,7 +1,7 @@
 ---
 title: R包curl的离线安装
 author: 波
-date: '2017-08-17'
+date: '2017-08-16'
 slug: R包curl的离线安装
 categories: []
 tags: []
