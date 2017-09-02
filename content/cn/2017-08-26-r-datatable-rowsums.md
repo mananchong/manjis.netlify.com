@@ -13,8 +13,9 @@ from_Rmd: yes
 ```r
 library(data.table)
 menJiZhen <- data.table(keShi = c("内科", "外科", "骨科", 
-    "妇产科", "儿科"), menZhenRenCi = c(555, 666, 777, 888, 
-    999), jiZhenRenCi = c(55, 66, 77, 88, 99))
+    "妇产科", "儿科", "皮肤科"), menZhenRenCi = c(555, 
+    666, 777, 888, 999, 111), jiZhenRenCi = c(55, 66, 77, 88, 
+    99, NA))
 knitr::kable(menJiZhen)
 ```
 
@@ -27,13 +28,15 @@ knitr::kable(menJiZhen)
 |骨科   |          777|          77|
 |妇产科 |          888|          88|
 |儿科   |          999|          99|
+|皮肤科 |          111|          NA|
 
-## `rowSums`
+## 采用`rowSums`函数
 
 ```r
-menJiZhen[, `:=`(heJi, rowSums(.SD)), .SDcols = c("menZhenRenCi", 
+methods01 <- copy(menJiZhen)
+methods01[, `:=`(heJi, rowSums(.SD, na.rm = TRUE)), .SDcols = c("menZhenRenCi", 
     "jiZhenRenCi")]
-knitr::kable(menJiZhen)
+knitr::kable(methods01)
 ```
 
 
@@ -45,7 +48,33 @@ knitr::kable(menJiZhen)
 |骨科   |          777|          77|  854|
 |妇产科 |          888|          88|  976|
 |儿科   |          999|          99| 1098|
+|皮肤科 |          111|          NA|  111|
+如果要计算的列中包含空值，可以通过设置 `rowSums` 函数的 `na.rm = TRUE` 参数来排除空值。示例中，皮肤科没有急诊，默认情况下（ `na.rm = FALSE` ），计算结果是 `NA`，不是希望的结果。
+
+
+## 采用 `Reduce` 和  `+` 函数
+
+```r
+methods02 <- copy(menJiZhen)
+sumCols <- c("menZhenRenCi", "jiZhenRenCi")
+for (col in sumCols) set(methods02, i = which(is.na(methods02[[col]])), 
+    j = col, 0L)
+methods02[, `:=`(heJi, Reduce(`+`, .SD)), .SDcols = sumCols]
+knitr::kable(methods02)
+```
 
 
 
-## `Reduce`加`+`
+|keShi  | menZhenRenCi| jiZhenRenCi| heJi|
+|:------|------------:|-----------:|----:|
+|内科   |          555|          55|  610|
+|外科   |          666|          66|  732|
+|骨科   |          777|          77|  854|
+|妇产科 |          888|          88|  976|
+|儿科   |          999|          99| 1098|
+|皮肤科 |          111|           0|  111|
+这种方法里，也是首先把空值替换成 0 ， 再用 `Reduce` 和  `+` 函数来求和。
+
+两种方法里，第一种得到的合计列，是 `double` 类型的，而第二种方法里是 `integer` 类型的。
+
+参考：[Sum of integer columns is double](https://stackoverflow.com/questions/45960913/sum-of-integer-columns-is-double/45961107#45961107)
