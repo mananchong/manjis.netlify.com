@@ -12,9 +12,9 @@ from_Rmd: yes
 
 ```r
 library(data.table)
-menJiZhen <- data.table(keShi = c("内科", "外科", "骨科", "妇产科", 
-    "儿科"), menZhenRenCi = c(555, 666, 777, 888, 999), jiZhenRenCi = c(55, 
-    66, 77, 88, 99))
+menJiZhen <- data.table(keShi = c("内科", "外科", "骨科", 
+    "妇产科", "儿科"), menZhenRenCi = c(555, 666, 777, 888, 
+    999), jiZhenRenCi = c(55, 66, 77, 88, 99))
 knitr::kable(menJiZhen)
 ```
 
@@ -28,4 +28,24 @@ knitr::kable(menJiZhen)
 |妇产科 |          888|          88|
 |儿科   |          999|          99|
 
- 
+## `rowSums`
+
+```r
+menJiZhen[, `:=`(heJi, rowSums(.SD)), .SDcols = c("menZhenRenCi", 
+    "jiZhenRenCi")]
+knitr::kable(menJiZhen)
+```
+
+
+
+|keShi  | menZhenRenCi| jiZhenRenCi| heJi|
+|:------|------------:|-----------:|----:|
+|内科   |          555|          55|  610|
+|外科   |          666|          66|  732|
+|骨科   |          777|          77|  854|
+|妇产科 |          888|          88|  976|
+|儿科   |          999|          99| 1098|
+
+
+
+## `Reduce`加`+`

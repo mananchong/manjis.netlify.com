@@ -16,4 +16,12 @@ menJiZhen <- data.table(keShi = c('内科', '外科', '骨科', '妇产科', '�
 knitr::kable(menJiZhen)
 ```
 
- 
+## `rowSums`
+```{r}
+menJiZhen[, heJi := rowSums(.SD), .SDcols = c('menZhenRenCi', 'jiZhenRenCi')]
+knitr::kable(menJiZhen)
+```
+
+
+
+## `Reduce`加`+`
