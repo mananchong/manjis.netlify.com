@@ -60,4 +60,4 @@ knitr::kable(menJiZhen)
 |儿科  |   897|
 |NA    |   592|
 |NA    |   507|
-
+参考：[Removing multiple columns from R data.table with parameter for columns to remove](https://stackoverflow.com/questions/24590341/removing-multiple-columns-from-r-data-table-with-parameter-for-columns-to-remove)

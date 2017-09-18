@@ -27,4 +27,4 @@ colsToDelete <- c("X_1", "X_2")
 menJiZhen[, (colsToDelete) := NULL]
 knitr::kable(menJiZhen)
 ```
-
+参考：[Removing multiple columns from R data.table with parameter for columns to remove](https://stackoverflow.com/questions/24590341/removing-multiple-columns-from-r-data-table-with-parameter-for-columns-to-remove)
