@@ -58,3 +58,4 @@ qplot(x, y, data = dd, geom = "line") + geom_ribbon(data = subset(dd,
 
 ![plot of chunk unnamed-chunk-4](/figures/cn/shading-a-kernel-density-plot-between-two-points/unnamed-chunk-4-1.png)
 
+参考: [Shading a kernel density plot between two points](https://stackoverflow.com/questions/3494593/shading-a-kernel-density-plot-between-two-points)

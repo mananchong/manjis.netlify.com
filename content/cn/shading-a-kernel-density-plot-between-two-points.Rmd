@@ -46,4 +46,4 @@ qplot(x,y,data=dd,geom="line")+
               fill="red",colour=NA,alpha=0.5)
 ```
 
-参考： [Shading a kernel density plot between two points](https://stackoverflow.com/questions/3494593/shading-a-kernel-density-plot-between-two-points)
+参考: [Shading a kernel density plot between two points](https://stackoverflow.com/questions/3494593/shading-a-kernel-density-plot-between-two-points)
