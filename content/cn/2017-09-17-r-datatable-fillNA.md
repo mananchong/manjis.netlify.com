@@ -1,8 +1,8 @@
 ---
-title: dataframe中空值的处理
+title: dataframe中空值的填充
 author: 波
 date: '2017-09-17'
-slug: dataframe中空值的处理
+slug: dataframe中空值的填充
 categories: []
 tags: []
 from_Rmd: yes
@@ -14,8 +14,7 @@ from_Rmd: yes
 
 ```r
 library(data.table)
-keShi = c("内科", NA, NA, "外科", NA, NA, NA, "儿科", NA, 
-    NA)
+keShi = c("内科", NA, NA, "外科", NA, NA, NA, "儿科", NA, NA)
 set.seed(123)
 menZhenRenCi = sample(100:1000, length(keShi))
 jiZhenRenCi = sample(100:1000, length(keShi))
