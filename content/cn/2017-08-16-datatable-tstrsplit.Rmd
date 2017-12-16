@@ -16,7 +16,7 @@ library(data.table)
 library(kableExtra)
 dtAge <- data.table(name = c('张三', '李四', '王五'),
                  age = c('15Y', '10M', '23D'))
-kable_styling(knitr::kable(dtAge), bootstrap_options = c("striped", "hover"))
+kable_styling(knitr::kable(dtAge,'html'), bootstrap_options = c("striped", "hover"))
 ```
 
 然后用 `gsub` 把数值和单位之间加上 `@` 符号：

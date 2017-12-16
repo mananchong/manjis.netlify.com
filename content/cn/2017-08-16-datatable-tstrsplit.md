@@ -18,21 +18,30 @@ library(data.table)
 library(kableExtra)
 dtAge <- data.table(name = c("张三", "李四", "王五"), age = c("15Y", 
     "10M", "23D"))
-kable_styling(knitr::kable(dtAge), bootstrap_options = c("striped", 
+kable_styling(knitr::kable(dtAge, "html"), bootstrap_options = c("striped", 
     "hover"))
 ```
 
-```
-## Currently generic markdown table using pandoc is not supported.
-```
-
-
-
-|name |age |
-|:----|:---|
-|张三 |15Y |
-|李四 |10M |
-|王五 |23D |
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;"> name </th>
+   <th style="text-align:left;"> age </th>
+  </tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> 张三 </td>
+   <td style="text-align:left;"> 15Y </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> 李四 </td>
+   <td style="text-align:left;"> 10M </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> 王五 </td>
+   <td style="text-align:left;"> 23D </td>
+  </tr>
+</tbody>
+</table>
 
 然后用 `gsub` 把数值和单位之间加上 `@` 符号：
 
