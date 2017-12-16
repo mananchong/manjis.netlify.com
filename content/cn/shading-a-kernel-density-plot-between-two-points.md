@@ -25,7 +25,36 @@ plot(dens)
 
 ![plot of chunk unnamed-chunk-1](/figures/cn/shading-a-kernel-density-plot-between-two-points/unnamed-chunk-1-1.png)
 
+提主想在第75和第95百分位数之间加上阴影，用 `quantile` 函数可以计算出这两个值。
+
+```r
+q75 <- quantile(draws, 0.75)
+q95 <- quantile(draws, 0.95)
+```
+
 
 ## base plot 方法
 
+```r
+x1 <- min(which(dens$x >= q75))
+x2 <- max(which(dens$x < q95))
+plot(dens)
+with(dens, polygon(x = c(x[c(x1, x1:x2, x2)]), y = c(0, y[x1:x2], 
+    0), col = "gray"))
+```
+
+![plot of chunk unnamed-chunk-3](/figures/cn/shading-a-kernel-density-plot-between-two-points/unnamed-chunk-3-1.png)
+
+
 ## ggplot2 方法
+
+```r
+dd <- with(dens, data.frame(x, y))
+library(ggplot2)
+qplot(x, y, data = dd, geom = "line") + geom_ribbon(data = subset(dd, 
+    x > q75 & x < q95), aes(ymax = y), ymin = 0, fill = "red", 
+    colour = NA, alpha = 0.5)
+```
+
+![plot of chunk unnamed-chunk-4](/figures/cn/shading-a-kernel-density-plot-between-two-points/unnamed-chunk-4-1.png)
+
