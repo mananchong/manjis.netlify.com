@@ -1,0 +1,27 @@
+---
+title: 概率密度函数曲线下加阴影的办法
+author: ''
+date: '2017-12-16'
+slug: 概率密度函数曲线下加阴影的办法
+categories: []
+tags:
+  - plot
+  - ggplot2
+---
+
+so上有个问题是如何在概率密度函数曲线下与X轴上的两点之间加阴影。
+
+主要有三种方法，除了 base plot 和 ggplot2外，另外一种是用lattice包，我对这个包不了解，在这里就不列出来了。
+
+示例用的数据如下：
+```{r}
+set.seed(1)
+draws <- rnorm(100)^2
+dens <- density(draws)
+plot(dens)
+```
+
+
+## base plot 方法
+
+## ggplot2 方法
