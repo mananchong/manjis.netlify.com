@@ -23,7 +23,7 @@ dens <- density(draws)
 plot(dens)
 ```
 
-![plot of chunk unnamed-chunk-1](/figures/cn/shading-a-kernel-density-plot-between-two-points/unnamed-chunk-1-1.png)
+![plot of chunk unnamed-chunk-1](/figures/cn/2017-12-16-shading-a-kernel-density-plot-between-two-points/unnamed-chunk-1-1.png)
 
 提主想在第75和第95百分位数之间加上阴影，用 `quantile` 函数可以计算出这两个值。
 
@@ -43,7 +43,7 @@ with(dens, polygon(x = c(x[c(x1, x1:x2, x2)]), y = c(0, y[x1:x2],
     0), col = "gray"))
 ```
 
-![plot of chunk unnamed-chunk-3](/figures/cn/shading-a-kernel-density-plot-between-two-points/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-3](/figures/cn/2017-12-16-shading-a-kernel-density-plot-between-two-points/unnamed-chunk-3-1.png)
 
 
 ## ggplot2 方法
@@ -56,6 +56,6 @@ qplot(x, y, data = dd, geom = "line") + geom_ribbon(data = subset(dd,
     colour = NA, alpha = 0.5)
 ```
 
-![plot of chunk unnamed-chunk-4](/figures/cn/shading-a-kernel-density-plot-between-two-points/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](/figures/cn/2017-12-16-shading-a-kernel-density-plot-between-two-points/unnamed-chunk-4-1.png)
 
 参考: [Shading a kernel density plot between two points](https://stackoverflow.com/questions/3494593/shading-a-kernel-density-plot-between-two-points)

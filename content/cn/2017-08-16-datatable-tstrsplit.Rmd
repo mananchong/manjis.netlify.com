@@ -13,9 +13,10 @@ output: html_document
 首先建立一个示例用的 `data.table` : 
 ```{r}
 library(data.table)
+library(kableExtra)
 dtAge <- data.table(name = c('张三', '李四', '王五'),
                  age = c('15Y', '10M', '23D'))
-knitr::kable(dtAge)
+kable_styling(knitr::kable(dtAge))
 ```
 
 然后用 `gsub` 把数值和单位之间加上 `@` 符号：

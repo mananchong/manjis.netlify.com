@@ -15,9 +15,14 @@ from_Rmd: yes
 
 ```r
 library(data.table)
+library(kableExtra)
 dtAge <- data.table(name = c("张三", "李四", "王五"), age = c("15Y", 
     "10M", "23D"))
-knitr::kable(dtAge)
+kable_styling(knitr::kable(dtAge))
+```
+
+```
+## Currently generic markdown table using pandoc is not supported.
 ```
 
 
