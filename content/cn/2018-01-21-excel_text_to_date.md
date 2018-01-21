@@ -2,10 +2,9 @@
 title: EXCEL中把文本转换成日期的方法
 author: 波
 date: '2018-01-21'
-slug: excel中把文本转换成日期的方法
-categories: []
 tags:
   - excel
+slug: excel中把文本转换成日期的方法
 ---
 
 虽然已经尽量将重复性的内容写成R脚本，工作中难免还是要用到EXCEL。
@@ -15,4 +14,4 @@ tags:
 ![](/images/excel_text_to_date.PNG)
 
 
-参考：[](https://exceljet.net/formula/convert-text-to-date)
+参考：[https://exceljet.net/formula/convert-text-to-date](https://exceljet.net/formula/convert-text-to-date)
