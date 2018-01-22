@@ -1,8 +1,8 @@
 ---
-title: dataframe中空值的填充
+title: datatable中空值的填充
 author: 波
 date: '2017-09-17'
-slug: dataframe中空值的填充
+slug: datatable-fillna
 categories: []
 tags: []
 from_Rmd: yes
