@@ -15,3 +15,32 @@ library(rvest)
 doc <- read_html('http://www.cnblogs.com/jiqing9006/p/5849874.html')
 ```
 
+在浏览器的开发者工具里查看之后，发现需要的内容都在`<code>`这个`CSS`标签里，这样就可以取出需要的文本。
+
+```{r}
+postCode <- html_node(doc, css = 'code')
+postCode <- html_text(postCode)
+```
+
+查看上面`postCode`里的内容，发现里面有很多`\n`，于是可以依此将文本分行。
+
+```{r}
+library(stringi)
+postCodeLines <- stri_split_lines(postCode)
+postCodeLines <- postCodeLines[[1]]
+head(postCodeLines, n = 40)
+tail(postCodeLines)
+```
+
+从上面的输出可以看到，第23到34行可以提取出字段的英文名和中文名，第41到倒数第2行是各个县区的具体内容。
+
+先提取字段名
+
+```{r}
+header <- postCodeLines[23:34]
+headerEn <- stri_extract_first_regex(header, "(?<=`).*(?=`)")
+headerCn <- stri_extract_first_regex(header, "(?<=').*(?=')")
+
+```
+
+
