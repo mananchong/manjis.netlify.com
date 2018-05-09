@@ -43,4 +43,18 @@ headerCn <- stri_extract_first_regex(header, "(?<=').*(?=')")
 
 ```
 
+再提取具体内容
+
+```{r}
+counties <- postCodeLines[41:(length(postCodeLines)-2)]
+counties <- stri_extract_first_regex(counties, "(?<=\\().*(?=\\))")
+```
+
+合并为数据框
+
+```{r}
+library(data.table)
+counties_dt <- as.data.table(counties)
+
+```
 
