@@ -47,16 +47,8 @@ headerCn <- stri_extract_first_regex(header, "(?<=').*(?=')")
 counties <- postCodeLines[41:(length(postCodeLines)-2)]
 counties <- stri_extract_first_regex(counties, "(?<=\\().*(?=\\))")
 tmpFile <- tempfile(fileext = ".csv")
-tmpFile
 writeLines(counties, tmpFile)
-# for (ll in seq_along(counties)) {
-#  aa <- counties[ll]
-#  cat(aa, tmpFile, sep="\n", append=TRUE)
-#}
-# counties_dt <- as.data.table(list(origin=counties))
-# counties_dt[, (headerEn) := tstrsplit(origin, ",(?=([^\']*\'[^\']*\')*[^\']*$)")]
-# file.edit(tmpFile)
 ans <- fread(tmpFile, sep=",", quote="\'", col.names=headerEn)
-kable::kable(ans)
+knitr::kable(ans)
 ```
 
