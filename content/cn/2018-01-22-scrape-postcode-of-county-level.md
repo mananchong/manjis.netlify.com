@@ -12,7 +12,22 @@ categories: []
 
 ```r
 library(rvest)
+library(stringi)
+library(data.table)
+```
+
+
+```r
 doc <- read_html('http://www.cnblogs.com/jiqing9006/p/5849874.html')
+head(doc)
+```
+
+```
+## $node
+## <pointer: 0x000002184def44b0>
+## 
+## $doc
+## <pointer: 0x0000021848d72860>
 ```
 
 在浏览器的开发者工具里查看之后，发现需要的内容都在`<code>`这个`CSS`标签里，这样就可以取出需要的文本。
@@ -27,7 +42,6 @@ postCode <- html_text(postCode)
 
 
 ```r
-library(stringi)
 postCodeLines <- stri_split_lines(postCode)
 postCodeLines <- postCodeLines[[1]]
 head(postCodeLines, n = 40)
@@ -98,21 +112,30 @@ tail(postCodeLines)
 header <- postCodeLines[23:34]
 headerEn <- stri_extract_first_regex(header, "(?<=`).*(?=`)")
 headerCn <- stri_extract_first_regex(header, "(?<=').*(?=')")
-```
-
-再提取具体内容
-
-
-```r
 counties <- postCodeLines[41:(length(postCodeLines)-2)]
 counties <- stri_extract_first_regex(counties, "(?<=\\().*(?=\\))")
+tmpFile <- tempfile(fileext = ".csv")
+tmpFile
 ```
 
-合并为数据框
-
+```
+## [1] "C:\\Users\\admin\\AppData\\Local\\Temp\\RtmpIf7dA6\\file148c4634d0b.csv"
+```
 
 ```r
-library(data.table)
-counties_dt <- as.data.table(counties)
+writeLines(counties, tmpFile)
+# for (ll in seq_along(counties)) {
+#  aa <- counties[ll]
+#  cat(aa, tmpFile, sep="\n", append=TRUE)
+#}
+# counties_dt <- as.data.table(list(origin=counties))
+# counties_dt[, (headerEn) := tstrsplit(origin, ",(?=([^\']*\'[^\']*\')*[^\']*$)")]
+# file.edit(tmpFile)
+ans <- fread(tmpFile, sep=",", quote="\'", col.names=headerEn)
+kable::kable(ans)
+```
+
+```
+## Error in loadNamespace(name): there is no package called 'kable'
 ```
 
