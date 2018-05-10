@@ -24,10 +24,10 @@ head(doc)
 
 ```
 ## $node
-## <pointer: 0x000002184def44b0>
+## <pointer: 0x000002184deccc40>
 ## 
 ## $doc
-## <pointer: 0x0000021848d72860>
+## <pointer: 0x0000021848d724a0>
 ```
 
 在浏览器的开发者工具里查看之后，发现需要的内容都在`<code>`这个`CSS`标签里，这样就可以取出需要的文本。
@@ -115,27 +115,12 @@ headerCn <- stri_extract_first_regex(header, "(?<=').*(?=')")
 counties <- postCodeLines[41:(length(postCodeLines)-2)]
 counties <- stri_extract_first_regex(counties, "(?<=\\().*(?=\\))")
 tmpFile <- tempfile(fileext = ".csv")
-tmpFile
-```
-
-```
-## [1] "C:\\Users\\admin\\AppData\\Local\\Temp\\RtmpIf7dA6\\file148c4634d0b.csv"
-```
-
-```r
 writeLines(counties, tmpFile)
-# for (ll in seq_along(counties)) {
-#  aa <- counties[ll]
-#  cat(aa, tmpFile, sep="\n", append=TRUE)
-#}
-# counties_dt <- as.data.table(list(origin=counties))
-# counties_dt[, (headerEn) := tstrsplit(origin, ",(?=([^\']*\'[^\']*\')*[^\']*$)")]
-# file.edit(tmpFile)
 ans <- fread(tmpFile, sep=",", quote="\'", col.names=headerEn)
-kable::kable(ans)
+kable(ans)
 ```
 
 ```
-## Error in loadNamespace(name): there is no package called 'kable'
+## Error in kable(ans): could not find function "kable"
 ```
 
