@@ -49,6 +49,10 @@ counties <- stri_extract_first_regex(counties, "(?<=\\().*(?=\\))")
 tmpFile <- tempfile(fileext = ".csv")
 writeLines(counties, tmpFile)
 ans <- fread(tmpFile, sep=",", quote="\'", col.names=headerEn)
+<<<<<<< HEAD
 knitr::kable(ans)
+=======
+kable(ans)
+>>>>>>> 67cda6b3dac44472932ed472bfe806fcc6d326c1
 ```
 
