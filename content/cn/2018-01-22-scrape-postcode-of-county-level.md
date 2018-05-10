@@ -24,10 +24,10 @@ head(doc)
 
 ```
 ## $node
-## <pointer: 0x000002184deccc40>
+## <pointer: 0x000002184df8ff80>
 ## 
 ## $doc
-## <pointer: 0x0000021848d724a0>
+## <pointer: 0x0000021848d730a0>
 ```
 
 在浏览器的开发者工具里查看之后，发现需要的内容都在`<code>`这个`CSS`标签里，这样就可以取出需要的文本。
@@ -117,10 +117,17 @@ counties <- stri_extract_first_regex(counties, "(?<=\\().*(?=\\))")
 tmpFile <- tempfile(fileext = ".csv")
 writeLines(counties, tmpFile)
 ans <- fread(tmpFile, sep=",", quote="\'", col.names=headerEn)
-kable(ans)
+knitr::kable(head(ans))
 ```
 
-```
-## Error in kable(ans): could not find function "kable"
-```
+
+
+| id| pid|shortname |name   |merger_name             | level|pinyin    | code| zip_code|first |      lng|      lat|
+|--:|---:|:---------|:------|:-----------------------|-----:|:---------|----:|--------:|:-----|--------:|--------:|
+|  1|   0|北京      |北京   |中国,北京               |     1|beijing   |   NA|       NA|B     | 116.4053| 39.90499|
+|  2|   1|北京      |北京市 |中国,北京,北京市        |     2|beijing   |   10|   100000|B     | 116.4053| 39.90499|
+|  3|   2|东城      |东城区 |中国,北京,北京市,东城区 |     3|dongcheng |   10|   100010|D     | 116.4100| 39.93157|
+|  4|   2|西城      |西城区 |中国,北京,北京市,西城区 |     3|xicheng   |   10|   100032|X     | 116.3600| 39.93050|
+|  5|   2|朝阳      |朝阳区 |中国,北京,北京市,朝阳区 |     3|chaoyang  |   10|   100020|C     | 116.4855| 39.94840|
+|  6|   2|丰台      |丰台区 |中国,北京,北京市,丰台区 |     3|fengtai   |   10|   100071|F     | 116.2862| 39.85850|
 
