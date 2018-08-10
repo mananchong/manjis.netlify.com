@@ -2,7 +2,7 @@
 title: "一些有用的命令"
 author: "波"
 date: '2018-08-09'
-slug: grid-package
+slug: useful-tips
 tags: []
 categories: []
 from_Rmd: yes
