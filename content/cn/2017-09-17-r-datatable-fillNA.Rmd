@@ -12,15 +12,17 @@ from_Rmd: yes
 
 ```{r}
 library(data.table)
-keShi = c("内科", NA, NA, "外科", NA, NA, NA, "儿科", NA, NA)
+ke_shi = c("内科", NA, NA, "外科", NA, NA, NA, "儿科", NA, NA)
 set.seed(123)
-menZhenRenCi = sample(100:1000, length(keShi))
-jiZhenRenCi = sample(100:1000, length(keShi))
-menJiZhen <- data.table(keShi, menZhenRenCi, jiZhenRenCi)
-knitr::kable(menJiZhen)
+men_zhen_ren_ci = sample(100:1000, length(ke_shi))
+ji_zhen_ren_ci = sample(100:1000, length(ke_shi))
+men_ji_zhen <- data.table(ke_shi, men_zhen_ren_ci, ji_zhen_ren_ci)
+knitr::kable(men_ji_zhen)
 ```
 
 ## NA替换为 0
+
+## 开发版中新增了相关的函数
 
 ## `na.locf`
 
