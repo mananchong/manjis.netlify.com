@@ -1,0 +1,93 @@
+---
+title: datatable中空值的填充
+author: 波
+date: '2017-09-17'
+slug: datatable-fillna
+categories: []
+tags: []
+from_Rmd: yes
+---
+
+
+
+<p>从 EXCEL 读入到 R 里的数据，经常会存在空值。比较常见的情况如下所示</p>
+<pre class="r"><code>library(data.table)
+ke_shi = c(&quot;内科&quot;, NA, NA, &quot;外科&quot;, NA, NA, NA, &quot;儿科&quot;, NA, NA)
+set.seed(123)
+men_zhen_ren_ci = sample(100:1000, length(ke_shi))
+ji_zhen_ren_ci = sample(100:1000, length(ke_shi))
+men_ji_zhen &lt;- data.table(ke_shi, men_zhen_ren_ci, ji_zhen_ren_ci)
+knitr::kable(men_ji_zhen)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">ke_shi</th>
+<th align="right">men_zhen_ren_ci</th>
+<th align="right">ji_zhen_ren_ci</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">内科</td>
+<td align="right">514</td>
+<td align="right">113</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="right">562</td>
+<td align="right">473</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">278</td>
+<td align="right">764</td>
+</tr>
+<tr class="even">
+<td align="left">外科</td>
+<td align="right">625</td>
+<td align="right">701</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">294</td>
+<td align="right">702</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="right">917</td>
+<td align="right">867</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">217</td>
+<td align="right">808</td>
+</tr>
+<tr class="even">
+<td align="left">儿科</td>
+<td align="right">398</td>
+<td align="right">190</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">328</td>
+<td align="right">447</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="right">343</td>
+<td align="right">748</td>
+</tr>
+</tbody>
+</table>
+<div id="na-0" class="section level2">
+<h2>NA替换为 0</h2>
+</div>
+<div id="section" class="section level2">
+<h2>开发版中新增了相关的函数</h2>
+</div>
+<div id="na.locf" class="section level2">
+<h2><code>na.locf</code></h2>
+</div>
+<div id="base-r" class="section level2">
+<h2><code>base R</code></h2>
+</div>

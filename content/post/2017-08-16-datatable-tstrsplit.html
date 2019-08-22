@@ -1,0 +1,671 @@
+---
+title: Rdatatable中tstrsplit的用法
+author: 波
+date: '2017-08-16'
+output: html_document
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<p><a href="http://rdatatable.com">data.table</a> 包中的 <code>tstrsplit</code> 函数可以用来把 data.frame 中的一列拆分成两列或多列。</p>
+<div id="section" class="section level2">
+<h2>事先知道要拆成几列的情况</h2>
+<p>平时会看到把年龄保存为数字加单位的形式，比如 “12Y”, “23D”, “6M”. 这样的形式不利于过滤。此时就可以利用刚才提到的 ‘tstrsplit’ 来把年龄列拆分成数值列和单位列，再进行下一步处理。</p>
+<p>首先建立一个示例用的 <code>data.table</code> :</p>
+<pre class="r"><code>library(data.table)
+library(kableExtra)
+dtAge &lt;- data.table(name = c(&#39;张三&#39;, &#39;李四&#39;, &#39;王五&#39;),
+                 age = c(&#39;15Y&#39;, &#39;10M&#39;, &#39;23D&#39;))
+kable_styling(knitr::kable(dtAge,&#39;html&#39;), bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;))</code></pre>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+age
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+张三
+</td>
+<td style="text-align:left;">
+15Y
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+李四
+</td>
+<td style="text-align:left;">
+10M
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+王五
+</td>
+<td style="text-align:left;">
+23D
+</td>
+</tr>
+</tbody>
+</table>
+<p>然后用 <code>gsub</code> 把数值和单位之间加上 <code>@</code> 符号：</p>
+<pre class="r"><code>dtAge[, ageNew := gsub(&#39;(\\d+)&#39;, &#39;\\1@&#39;, age)]
+knitr::kable(dtAge)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+age
+</th>
+<th style="text-align:left;">
+ageNew
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+张三
+</td>
+<td style="text-align:left;">
+15Y
+</td>
+<td style="text-align:left;">
+<a href="mailto:15@Y" class="email">15@Y</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+李四
+</td>
+<td style="text-align:left;">
+10M
+</td>
+<td style="text-align:left;">
+<a href="mailto:10@M" class="email">10@M</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+王五
+</td>
+<td style="text-align:left;">
+23D
+</td>
+<td style="text-align:left;">
+<a href="mailto:23@D" class="email">23@D</a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>最后按照 <code>@</code> 拆分即可：</p>
+<pre class="r"><code>dtAge[, c(&#39;ageValue&#39;, &#39;ageUnit&#39;) := tstrsplit(ageNew, &#39;@&#39;)]
+knitr::kable(dtAge)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+age
+</th>
+<th style="text-align:left;">
+ageNew
+</th>
+<th style="text-align:left;">
+ageValue
+</th>
+<th style="text-align:left;">
+ageUnit
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+张三
+</td>
+<td style="text-align:left;">
+15Y
+</td>
+<td style="text-align:left;">
+<a href="mailto:15@Y" class="email">15@Y</a>
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+Y
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+李四
+</td>
+<td style="text-align:left;">
+10M
+</td>
+<td style="text-align:left;">
+<a href="mailto:10@M" class="email">10@M</a>
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+M
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+王五
+</td>
+<td style="text-align:left;">
+23D
+</td>
+<td style="text-align:left;">
+<a href="mailto:23@D" class="email">23@D</a>
+</td>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+D
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="section-1" class="section level2">
+<h2>事先不知道要拆成几列的情况</h2>
+<p>前几天刚好遇到这样的情况，是关于病人按部位做CT的人次的表格。第一列是做的部位，胸部，腹部，脊柱等，这里存在一人同时做几个部位的情况，每个部位都要计算。第二列是扫描方式，是平扫还是增强。第三列是人次。</p>
+<ol style="list-style-type: decimal">
+<li><p>示例数据<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>如下：</p>
+<pre class="r"><code>library(data.table)
+dtCT &lt;- data.table(buWei = c(&quot;胸部,颈部&quot;, &quot;腹部,腰椎,颈部&quot;, 
+    &quot;关节,胸部&quot;, &quot;颅脑&quot;), fangShi = c(&quot;平扫&quot;, &quot;平扫&quot;, 
+    &quot;增强&quot;, &quot;增强&quot;), renCi = c(11, 22, 33, 44))
+knitr::kable(dtCT)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+<p>buWei</p>
+</th>
+<th style="text-align:left;">
+<p>fangShi</p>
+</th>
+<th style="text-align:right;">
+<p>renCi</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<p>胸部,颈部</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>11</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>腹部,腰椎,颈部</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>22</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>关节,胸部</p>
+</td>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>33</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>颅脑</p>
+</td>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>44</p>
+</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>计算出最多需要拆成几列：</p>
+<pre class="r"><code>maxCol &lt;- max(sapply(strsplit(dtCT$buWei,&#39;,&#39;),length))
+maxCol</code></pre>
+<pre><code>## [1] 3</code></pre></li>
+<li><p>拆成 3 列：</p>
+<pre class="r"><code>dtCT[, paste0(&#39;buWei_&#39;, 1:maxCol) := tstrsplit(buWei, &#39;,&#39;)][, buWei := NULL]
+knitr::kable(dtCT)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+<p>fangShi</p>
+</th>
+<th style="text-align:right;">
+<p>renCi</p>
+</th>
+<th style="text-align:left;">
+<p>buWei_1</p>
+</th>
+<th style="text-align:left;">
+<p>buWei_2</p>
+</th>
+<th style="text-align:left;">
+<p>buWei_3</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>11</p>
+</td>
+<td style="text-align:left;">
+<p>胸部</p>
+</td>
+<td style="text-align:left;">
+<p>颈部</p>
+</td>
+<td style="text-align:left;">
+<p>NA</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>22</p>
+</td>
+<td style="text-align:left;">
+<p>腹部</p>
+</td>
+<td style="text-align:left;">
+<p>腰椎</p>
+</td>
+<td style="text-align:left;">
+<p>颈部</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>33</p>
+</td>
+<td style="text-align:left;">
+<p>关节</p>
+</td>
+<td style="text-align:left;">
+<p>胸部</p>
+</td>
+<td style="text-align:left;">
+<p>NA</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>44</p>
+</td>
+<td style="text-align:left;">
+<p>颅脑</p>
+</td>
+<td style="text-align:left;">
+<p>NA</p>
+</td>
+<td style="text-align:left;">
+<p>NA</p>
+</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>用 <code>melt</code> 函数将部位转成一列：</p>
+<pre class="r"><code>ans01 &lt;- melt(dtCT, id.vars = c(&#39;fangShi&#39;, &#39;renCi&#39;))[!is.na(value)]
+ans01[, variable := NULL]
+setnames(ans01, &#39;value&#39;, &#39;newBuWei&#39;)
+setcolorder(ans01, c(&#39;newBuWei&#39;, &#39;fangShi&#39;, &#39;renCi&#39;))
+knitr::kable(ans01)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+<p>newBuWei</p>
+</th>
+<th style="text-align:left;">
+<p>fangShi</p>
+</th>
+<th style="text-align:right;">
+<p>renCi</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<p>胸部</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>11</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>腹部</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>22</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>关节</p>
+</td>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>33</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>颅脑</p>
+</td>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>44</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>颈部</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>11</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>腰椎</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>22</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>胸部</p>
+</td>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>33</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>颈部</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>22</p>
+</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>按拆分后的部位和扫描方式汇总：</p>
+<pre class="r"><code>ans02 &lt;- ans01[, .(heJi = sum(renCi)), keyby = .(newBuWei, fangShi)]
+knitr::kable(ans02)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+<p>newBuWei</p>
+</th>
+<th style="text-align:left;">
+<p>fangShi</p>
+</th>
+<th style="text-align:right;">
+<p>heJi</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<p>关节</p>
+</td>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>33</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>胸部</p>
+</td>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>33</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>胸部</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>11</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>腰椎</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>22</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>腹部</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>22</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>颅脑</p>
+</td>
+<td style="text-align:left;">
+<p>增强</p>
+</td>
+<td style="text-align:right;">
+<p>44</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>颈部</p>
+</td>
+<td style="text-align:left;">
+<p>平扫</p>
+</td>
+<td style="text-align:right;">
+<p>33</p>
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>上面 2, 3 两步，可以用 <code>splitstackshape</code> 包中的 <code>cSplit</code> 来实现，只需一步：</p>
+<pre class="r"><code>library(splitstackshape)
+dtCT &lt;- data.table(buWei = c(&#39;胸部,颈部&#39;, &#39;腹部,腰椎,颈部&#39;, &#39;关节,胸部&#39;, &#39;颅脑&#39;),
+                 fangShi = c(&#39;平扫&#39;, &#39;平扫&#39;, &#39;增强&#39;, &#39;增强&#39;),
+                 renCi = c(11, 22, 33, 44))
+knitr::kable(cSplit(dtCT, &#39;buWei&#39;, &#39;,&#39;))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+fangShi
+</th>
+<th style="text-align:right;">
+renCi
+</th>
+<th style="text-align:left;">
+buWei_1
+</th>
+<th style="text-align:left;">
+buWei_2
+</th>
+<th style="text-align:left;">
+buWei_3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+平扫
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+胸部
+</td>
+<td style="text-align:left;">
+颈部
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+平扫
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:left;">
+腹部
+</td>
+<td style="text-align:left;">
+腰椎
+</td>
+<td style="text-align:left;">
+颈部
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+增强
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+关节
+</td>
+<td style="text-align:left;">
+胸部
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+增强
+</td>
+<td style="text-align:right;">
+44
+</td>
+<td style="text-align:left;">
+颅脑
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>不一定符合临床实际情况；<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
