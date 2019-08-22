@@ -34,7 +34,7 @@ footnotereturnlinkcontents = "↩"
 
 [params]
     description = "A Hugo theme ported from the static site generator Ivy."
-    footer = "&copy; [Yihui Xie](https://yihui.name) 2017 | [Github](https://github.com/yihui) | [Twitter](https://twitter.com/xieyihui)"
+    footer = "&copy; [manjis](https://manjis.netlify.com) 2019 | [Github](https://github.com/mananchong) | [Twitter](https://twitter.com/mananchong)"
 
   highlightjsVersion = "9.12.0"
   highlightjsCDN = "//cdn.bootcss.com"
