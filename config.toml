@@ -1,10 +1,12 @@
 baseurl = "/"
 languageCode = "en-us"
-title = "Hugo Ivy"
+title = "mananchong | 马南冲"
 theme = "hugo-ivy"
 googleAnalytics = ""
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
+hasCJKLanguage = true
+enableEmoji = true
 preserveTaxonomyNames = true
 footnotereturnlinkcontents = "↩"
 
@@ -33,8 +35,8 @@ footnotereturnlinkcontents = "↩"
     url = "/index.xml"
 
 [params]
-    description = "A Hugo theme ported from the static site generator Ivy."
-    footer = "&copy; [manjis](https://manjis.netlify.com) 2019 | [Github](https://github.com/mananchong) | [Twitter](https://twitter.com/mananchong)"
+    description = "Personal website of Nanchong Ma; 马南冲的个人网站"
+    footer = "&copy; [Nanchong Ma](/) 2004 - 2019"
 
   highlightjsVersion = "9.12.0"
   highlightjsCDN = "//cdn.bootcss.com"
