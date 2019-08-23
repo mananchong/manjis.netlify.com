@@ -72,7 +72,7 @@ footnotereturnlinkcontents = "↩"
     weight = 5
     
 
-[[params]]
+[params]
     description = "Personal website of Nanchong Ma; 马南冲的个人网站"
     footer = "&copy; [Nanchong Ma](/) 2004 - 2019"
     highlightjsVersion = "9.12.0"
@@ -90,7 +90,7 @@ footnotereturnlinkcontents = "↩"
         "js/alt-title.js",
         "js/header-link.js"
     ]
-[[params.logo.en]]
+[params.logo.en]
     img = "/images/logo.png"
     url = "/"
     alt = "Nanchong Ma"
