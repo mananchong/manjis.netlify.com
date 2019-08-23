@@ -97,8 +97,12 @@ footnotereturnlinkcontents = "↩"
     tag = ""
 
 [params.lang.edit]
-      cn = "编辑"
+    cn = "编辑"
 [params.lang.license]
-      cn = "版权"
+    cn = "版权"
 [params.lang.subscribe]
-      cn = "订阅"
+    cn = "订阅"
+
+[author]
+    en = "Nanchong Ma"
+    cn: "马南冲"
