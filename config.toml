@@ -91,7 +91,7 @@ footnotereturnlinkcontents = "↩"
         "js/header-link.js"
     ]
 [[params.logo.en]]
-      img = "/images/logo.png"
-      url = "/"
-      alt = "Nanchong Ma"
-      tag = ""
+    img = "/images/logo.png"
+    url = "/"
+    alt = "Nanchong Ma"
+    tag = ""
