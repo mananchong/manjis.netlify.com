@@ -80,7 +80,7 @@ footnotereturnlinkcontents = "↩"
     highlightjsCDN = "//cdn.bootcss.com"
     highlightjsLang = ["r", "yaml", "tex"]
     highlightjsTheme = "github"
-[[params.logo.en]]
+[params.logo.en]
       img = "/images/logo.png"
       url = "/"
       alt = "Nanchong Ma"
