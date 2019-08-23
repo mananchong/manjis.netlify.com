@@ -103,6 +103,6 @@ footnotereturnlinkcontents = "↩"
 [params.lang.subscribe]
     cn = "订阅"
 
-[author]
+[params.author]
     en = "Nanchong Ma"
     cn = "马南冲"
